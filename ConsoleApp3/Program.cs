@@ -24,7 +24,7 @@ namespace ConsoleApp2
                 }
             }
 
-            if (leftSide.Count == 0)//equivalent strings
+            if (leftSide.Count == 0) //equivalent strings
             {
                 Dictionary<char, int> counts = new Dictionary<char, int>();
                 for (int i = 0; i < s.Length; ++i)
@@ -39,6 +39,7 @@ namespace ConsoleApp2
                     }
                 }
             }
+
             if (leftSide.Count != 2)
             {
                 return false;
@@ -79,6 +80,7 @@ namespace ConsoleApp2
             {
                 return;
             }
+
             var setMin = hashSet.Min();
             if (setMin < value)
             {
@@ -87,69 +89,68 @@ namespace ConsoleApp2
             }
         }
 
-    //[1,2,10,5,7]
-    //[2,3,1,2]
-    //[1,1,1]
-    public static bool CanBeIncreasing(int[] nums)
-    {
-      bool res = true;
-      int chance = 1;
-
-      for (int i = 1; i < nums.Length; i++)
-      {
-        if (nums[i - 1] >= nums[i])
+        public static bool CanBeIncreasing(int[] nums)
         {
-          chance -= 1;
+            bool res = true;
+            int chance = 1;
 
-          if (i >= 2 && nums[i - 2] >= nums[i])
-          {
-            nums[i] = nums[i - 1];
-          }
+            for (int i = 1; i < nums.Length; i++)
+            {
+                if (nums[i - 1] >= nums[i])
+                {
+                    chance -= 1;
+
+                    if (i >= 2 && nums[i - 2] >= nums[i])
+                    {
+                        nums[i] = nums[i - 1];
+                    }
+                }
+
+                if (chance < 0)
+                {
+                    res = false;
+                }
+            }
+
+            return res;
         }
-        if (chance < 0)
+
+        public static bool CanPlaceFlowers(int[] flowerbed, int n)
         {
-          res = false;
-        }
-      }
+            for (int i = 0; i < flowerbed.Length && n > 0; i++)
+            {
+                if (CanPlant(flowerbed, i))
+                {
+                    flowerbed[i] = 1;
+                    --n;
+                }
+            }
 
-      return res;
+            return n <= 0;
+        }
+
+        private static bool CanPlant(int[] flowerbed, int i)
+        {
+            if (i == 0 && flowerbed[i] == 0)
+            {
+                return flowerbed.Length == 1 || flowerbed[i + 1] == 0;
+            }
+
+            if (flowerbed[i] == 0 && flowerbed[i - 1] == 0)
+            {
+                return flowerbed.Length < i + 1 || flowerbed[i + 1] == 0;
+            }
+
+            return false;
+        }
     }
 
-    public static bool CanPlaceFlowers(int[] flowerbed, int n)
-    {
-      for (int i = 0; i < flowerbed.Length && n >0; i++)
-      {
-        if (CanPlant(flowerbed, i))
-        {
-          flowerbed[i] = 1;
-          --n;
-        }
-      }
-
-      return n <= 0;
-    }
-
-    private static bool CanPlant(int[] flowerbed, int i)
-    {
-      if (i == 0 && flowerbed[i] == 0)
-      {
-        return flowerbed.Length == 1 || flowerbed[i + 1] == 0;
-      }
-
-      if (flowerbed[i] == 0 && flowerbed[i - 1] == 0)
-      {
-        return flowerbed.Length < i + 1 || flowerbed[i + 1] == 0;
-      }
-
-      return false;
-    }
-  }
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            var result = Solution.CanBeIncreasing(new []{1, 1, 1});
+            var result = Solution.CanBeIncreasing(new[] {1, 1, 1});
             Console.ReadKey();
         }
-  }
+    }
 }
