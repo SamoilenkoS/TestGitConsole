@@ -3,8 +3,7 @@
 namespace ConsoleApp3
 {
     [Serializable]
-    public class Rectangle : AbstractFigure//
+    public class Rectangle : AbstractFigure
     {
-        
     }
 }
